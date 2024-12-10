@@ -2,6 +2,10 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ModalComponent } from '../modal/modal.component';
 
+interface City {
+  name: string;
+}
+
 @Component({
   selector: 'app-add-city',
   imports: [FormsModule, ModalComponent],
@@ -15,27 +19,34 @@ export class AddCityComponent {
   showModal: boolean = false;
   errorMessage: string = '';
 
-  addCity() {
-    const savedCities = JSON.parse(localStorage.getItem('cities') || '[]'); 
+  private static readonly ERROR_MESSAGES = {
+    emptyCity: 'Please enter a valid city name',
+    cityExists: 'This city is already added',
+  };
+
+  addCity(): void {
+    const savedCities: City[] = JSON.parse(
+      localStorage.getItem('cities') || '[]'
+    );
 
     const cityExists = savedCities.some(
-      (savedCity: { name: string }) =>
+      (savedCity) =>
         savedCity.name.toLowerCase() === this.city.trim().toLowerCase()
     );
 
     if (this.city.trim() === '') {
-      this.errorMessage = 'Please enter a valid city name';
+      this.errorMessage = AddCityComponent.ERROR_MESSAGES.emptyCity;
       this.showModal = true;
     } else if (cityExists) {
-      this.errorMessage = 'This city is already added';
-      this.showModal = true; 
+      this.errorMessage = AddCityComponent.ERROR_MESSAGES.cityExists;
+      this.showModal = true;
     } else {
       this.cityAdded.emit(this.city.trim());
-      this.city = ''; 
+      this.city = '';
     }
   }
 
-  closeModal() {
+  closeModal(): void {
     this.showModal = false;
   }
 }

@@ -3,6 +3,17 @@ import { WeatherService } from '../../services/weather.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
+interface ForecastItem {
+  dt_txt: string;
+  main: { temp: number };
+  weather: { main: string; description?: string }[];
+}
+
+interface GroupedForecast {
+  date: string;
+  forecast: ForecastItem[];
+}
+
 @Component({
   selector: 'app-weather-forecast',
   imports: [CommonModule],
@@ -11,7 +22,7 @@ import { CommonModule } from '@angular/common';
 })
 export class WeatherForecastComponent implements OnInit {
   cityName: string = '';
-  forecast: any[] = [];
+  forecast: GroupedForecast[] = [];
   loading: boolean = true;
 
   constructor(
@@ -23,29 +34,34 @@ export class WeatherForecastComponent implements OnInit {
   ngOnInit(): void {
     this.cityName = this.route.snapshot.paramMap.get('city') || '';
 
+    if (!this.cityName.trim()) {
+      this.goBack();
+      return;
+    }
+
     this.weatherService.getForecast(this.cityName).subscribe({
       next: (data) => {
-        this.forecast = data.list.filter((item: any) => {
-          const forecastDate = new Date(item.dt_txt);
-          return forecastDate.getHours() === 9;
-        });
-
-        const groupedByDate = this.groupByDate(this.forecast);
+        const filtered = this.filterForecast(data.list);
+        const groupedByDate = this.groupByDate(filtered);
         this.forecast = Object.keys(groupedByDate).map((date) => ({
           date,
           forecast: groupedByDate[date],
         }));
-
         this.loading = false;
       },
-      error: () => {
+      error: (err) => {
+        console.error('Error fetching forecast:', err);
         this.loading = false;
       },
     });
   }
 
-  groupByDate(data: any[]) {
-    return data.reduce((result: any, item: any) => {
+  private filterForecast(data: ForecastItem[]): ForecastItem[] {
+    return data.filter((item) => new Date(item.dt_txt).getHours() === 9);
+  }
+
+  private groupByDate(data: ForecastItem[]): Record<string, ForecastItem[]> {
+    return data.reduce((result: Record<string, ForecastItem[]>, item) => {
       const date = item.dt_txt.split(' ')[0];
       if (!result[date]) {
         result[date] = [];
@@ -56,6 +72,6 @@ export class WeatherForecastComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/']); 
+    this.router.navigate(['/']);
   }
 }
