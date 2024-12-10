@@ -1,0 +1,21 @@
+.dashboard {
+  padding: 90px;
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 50px; 
+  justify-content: flex-start; 
+  @media (max-width: 768px) {
+    padding: 10px;
+    
+  }
+}
+
+.loading-indicator {
+  font-size: 18px;
+  text-align: center;
+  color: #4e4eec;
+}
+
+app-weather-card {
+  flex-shrink: 0; 
+}

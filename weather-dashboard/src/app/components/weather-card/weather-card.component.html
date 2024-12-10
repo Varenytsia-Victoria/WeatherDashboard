@@ -1,8 +1,9 @@
 <div class="weather-card">
-  <h3>{{ city.name }}</h3>
-  <p>Температура: {{ city.temp }}°C</p>
-  <p>Стан: {{ city.condition }}</p>
-  <button (click)="remove.emit(city.name)">Видалити</button>
-    <button (click)="viewForecast(city.name)">Переглянути прогноз</button>
-
+  <button class="close-btn" (click)="remove.emit(city.name)">X</button>
+  <h3 class="city-name">{{ city.name }}</h3>
+  <p class="temperature">{{ city.temp }}°C</p>
+  <p class="condition">{{ city.condition }}</p>
+  <button class="forecast-btn" (click)="viewForecast(city.name)">
+    Show forecast
+  </button>
 </div>

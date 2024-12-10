@@ -1,4 +1,11 @@
+<h2>Weather Dashboard</h2>
 <div class="add-city">
-  <input [(ngModel)]="city" placeholder="Введіть назву міста" />
-  <button (click)="addCity()">Додати місто</button>
+  <input [(ngModel)]="city" placeholder="Enter city" />
+  <button (click)="addCity()">Add city</button>
 </div>
+
+<app-modal
+  *ngIf="showModal"
+  [message]="errorMessage"
+  (closeModal)="closeModal()"
+></app-modal>

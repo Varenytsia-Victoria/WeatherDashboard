@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
   selector: 'app-weather-card',
   imports: [],
   templateUrl: './weather-card.component.html',
-  styleUrl: './weather-card.component.sass',
+  styleUrl: './weather-card.component.scss',
 })
 export class WeatherCardComponent {
   @Input() city!: { name: string; temp: number; condition: string };
@@ -13,7 +13,6 @@ export class WeatherCardComponent {
 
   constructor(private router: Router) {}
 
-  // Метод для переходу до сторінки прогнозу
   viewForecast(cityName: string) {
     this.router.navigate(['/forecast', cityName]);
   }

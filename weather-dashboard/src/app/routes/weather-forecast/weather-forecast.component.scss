@@ -1,0 +1,72 @@
+.forecast-title {
+  text-align: center;
+  font-size: 50px;
+  font-weight: bold;
+  color: #6565f9;
+  text-shadow: 0 3px 8px rgba(78, 78, 236, 0.3);
+  margin: 30px 0 50px 0;
+}
+
+.forecast-page {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.forecast-card {
+  background: #cfd1ff;
+  border-radius: 10px;
+  padding: 15px;
+  width: 250px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(78, 78, 236, 0.1);
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(78, 78, 236, 0.2);
+  }
+
+  .forecast-date {
+    font-size: 16px;
+    font-weight: 600;
+    color: #4e4eec;
+    margin-bottom: 10px;
+  }
+
+  .forecast-temp {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3a3adb;
+    margin-bottom: 8px;
+  }
+
+  .forecast-description {
+    font-size: 14px;
+    color: #5656a3;
+  }
+}
+
+.loading-indicator {
+  font-size: 18px;
+  text-align: center;
+  color: #4e4eec;
+}
+
+button {
+  background-color: #e5e5fd;
+  color: #3636ccd4;
+  border: none;
+  border-radius: 40px;
+  padding: 18px 40px;
+  font-size: 23px;
+  cursor: pointer;
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(55, 3, 140, 0.17);
+  margin: 20px 0 0 20px;
+
+  &:hover {
+    background-color: #4e4eec57;
+    color: #3d3dba;
+  }
+}

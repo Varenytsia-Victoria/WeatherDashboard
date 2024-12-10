@@ -12,51 +12,34 @@ export class WeatherService {
   private apiKey = environment.weatherApiKey;
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  public loading$ = this.loadingSubject.asObservable(); // Стан індикатора завантаження
+  public loading$ = this.loadingSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  /**
-   * Отримання погодних даних для міста
-   * @param city Назва міста
-   * @returns Observable з даними погоди
-   */
   getWeather(city: string): Observable<any> {
-    this.setLoading(true); // Увімкнення індикатора завантаження
+    this.setLoading(true);
     const url = `${this.apiUrl}/weather?q=${city}&appid=${this.apiKey}&units=metric`;
 
     return this.http.get(url).pipe(
-      tap(() => console.log(`Запит погоди для міста: ${city}`)), // Лог запиту
       catchError((error) => {
-        console.error('Помилка при отриманні погодних даних:', error);
-        return throwError(() => new Error('Місто не знайдено'));
+        return throwError(() => new Error('Not found'));
       }),
-      finalize(() => this.setLoading(false)) // Вимкнення індикатора завантаження після завершення
+      finalize(() => this.setLoading(false))
     );
   }
 
-  /**
-   * Отримання прогнозу погоди на кілька днів для міста
-   * @param city Назва міста
-   * @returns Observable з прогнозом на кілька днів
-   */
   getForecast(city: string): Observable<any> {
-    this.setLoading(true); // Увімкнення індикатора завантаження
+    this.setLoading(true); 
     const url = `${this.apiUrl}/forecast?q=${city}&appid=${this.apiKey}&units=metric`;
 
     return this.http.get(url).pipe(
-      tap(() => console.log(`Запит прогнозу погоди для міста: ${city}`)), // Лог запиту
       catchError((error) => {
-        console.error('Помилка при отриманні прогнозу погоди:', error);
-        return throwError(() => new Error('Прогноз не знайдено'));
+        return throwError(() => new Error('Not Found'));
       }),
       finalize(() => this.setLoading(false)) 
     );
   }
 
-  /**
-   * @param isLoading Стан (true/false)
-   */
   private setLoading(isLoading: boolean) {
     this.loadingSubject.next(isLoading);
   }

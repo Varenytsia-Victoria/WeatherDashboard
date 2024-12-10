@@ -1,10 +1,12 @@
 <app-add-city (cityAdded)="addCity($event)"></app-add-city>
 
 <div class="dashboard">
-  <!-- Індикатор завантаження -->
-  <div *ngIf="loading$ | async" class="loading-indicator">Loading...</div>
-
-  <!-- Список міст -->
+  <div
+    *ngIf="loading$ | async"
+    class="loading-indicator"
+  >
+    Loading...
+  </div>
   <ng-container *ngIf="!(loading$ | async)">
     <app-weather-card
       *ngFor="let city of cities"
@@ -13,3 +15,5 @@
     ></app-weather-card>
   </ng-container>
 </div>
+<app-modal *ngIf="showModal" [message]="errorMessage" (closeModal)="closeModal()"></app-modal>
+

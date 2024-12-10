@@ -1,9 +1,21 @@
-<div *ngIf="loading" class="loading-indicator">Завантаження...</div>
+<button (click)="goBack()">< Go Back</button>
+<h2 class="forecast-title">Forecast for {{ cityName }}</h2>
 
-<div *ngIf="!loading">
-  <h2>Прогноз на кілька днів для міста {{ cityName }}</h2>
+<div *ngIf="!loading" class="forecast-page">
+  <div *ngIf="loading" class="loading-indicator">Data is loading...</div>
 
   <div *ngFor="let day of forecast">
-    <p>{{ day.dt_txt }}: {{ day.main.temp }}°C, {{ day.weather[0].description }}</p>
+    <div class="forecast-card">
+      <h3 class="forecast-date">{{ day.date }}</h3>
+      <div *ngFor="let forecastItem of day.forecast">
+        <p class="forecast-time">
+          {{ forecastItem.dt_txt | date : "shortTime" }}
+        </p>
+        <p class="forecast-temp">{{ forecastItem.main.temp }}°C</p>
+        <p class="forecast-description">
+          {{ forecastItem.weather[0].description }}
+        </p>
+      </div>
+    </div>
   </div>
 </div>
