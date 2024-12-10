@@ -3,4 +3,6 @@
   <p>Температура: {{ city.temp }}°C</p>
   <p>Стан: {{ city.condition }}</p>
   <button (click)="remove.emit(city.name)">Видалити</button>
+    <button (click)="viewForecast(city.name)">Переглянути прогноз</button>
+
 </div>

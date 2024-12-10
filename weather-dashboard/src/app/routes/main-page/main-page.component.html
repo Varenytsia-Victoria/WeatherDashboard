@@ -1,0 +1,15 @@
+<app-add-city (cityAdded)="addCity($event)"></app-add-city>
+
+<div class="dashboard">
+  <!-- Індикатор завантаження -->
+  <div *ngIf="loading$ | async" class="loading-indicator">Loading...</div>
+
+  <!-- Список міст -->
+  <ng-container *ngIf="!(loading$ | async)">
+    <app-weather-card
+      *ngFor="let city of cities"
+      [city]="city"
+      (remove)="removeCity($event)"
+    ></app-weather-card>
+  </ng-container>
+</div>

@@ -1,0 +1,9 @@
+<div *ngIf="loading" class="loading-indicator">Завантаження...</div>
+
+<div *ngIf="!loading">
+  <h2>Прогноз на кілька днів для міста {{ cityName }}</h2>
+
+  <div *ngFor="let day of forecast">
+    <p>{{ day.dt_txt }}: {{ day.main.temp }}°C, {{ day.weather[0].description }}</p>
+  </div>
+</div>

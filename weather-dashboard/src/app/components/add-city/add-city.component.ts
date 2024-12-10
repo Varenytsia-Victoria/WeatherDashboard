@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-add-city',
   imports: [FormsModule],
   templateUrl: './add-city.component.html',
-  styleUrl: './add-city.component.scss',
+  styleUrl: './add-city.component.sass',
 })
 export class AddCityComponent {
   city = '';
